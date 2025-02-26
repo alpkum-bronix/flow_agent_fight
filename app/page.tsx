@@ -1,11 +1,14 @@
-import { Button } from "@/components/ui/button";
+import { AgentsSection } from "@/components/custom/AgentsSection";
+import { BattlesSection } from "@/components/custom/BattlesSection";
+import { HeroSection } from "@/components/custom/HeroSection";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <div className="p-4">
-        <Button>Click me</Button>
-      </div>
-    </div>
-  );
+    <main className="flex min-h-screen flex-col">
+      <HeroSection />
+      <AgentsSection />
+      <BattlesSection />
+    </main>
+  )
 }
+
