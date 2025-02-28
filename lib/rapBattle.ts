@@ -77,9 +77,6 @@ export async function processRapBattle() {
 
         if (error || !recentBattle || recentBattle.status !== 'WAITING' && recentBattle.status !== 'IN_PROGRESS') return
 
-
-        if (recentBattle.agent_1 === null || recentBattle.agent_2 === null) return
-
         // Get the agents
         const { data: agents, error: agentsError } = await supabase
             .from('Agent')
@@ -100,7 +97,7 @@ export async function processRapBattle() {
             .update({
                 rounds: {
                     ...(recentBattle.rounds as object || {}),
-                    [recentBattle.current_round.toString()]: {
+                    [recentBattle.current_round]: {
                         agent1_verse: verse1,
                         agent2_verse: verse2
                     }
