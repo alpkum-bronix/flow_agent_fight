@@ -32,7 +32,8 @@ const mockBattleData = {
     status: "waiting", // "waiting", "in_progress", "finished"
 }
 
-export default function LiveBattlePage({ params }: { params: { id: string } }) {
+// export default function LiveBattlePage({ params }: { params: { id: string } }) {
+export default function LiveBattlePage() {
     const [battleData, setBattleData] = useState(mockBattleData)
     const [timeLeft, setTimeLeft] = useState(60)
 
@@ -82,7 +83,7 @@ export default function LiveBattlePage({ params }: { params: { id: string } }) {
     )
 }
 
-function BattleStage({ agent1, agent2 }: { agent1: any, agent2: any }) {
+function BattleStage({ agent1, agent2 }: { agent1: { id: number, name: string, image: string, score: number }, agent2: { id: number, name: string, image: string, score: number } }) {
     return (
         <Card className="overflow-hidden">
             <CardContent className="p-6">
@@ -96,7 +97,7 @@ function BattleStage({ agent1, agent2 }: { agent1: any, agent2: any }) {
     )
 }
 
-function AgentDisplay({ agent }: { agent: any }) {
+function AgentDisplay({ agent }: { agent: { id: number, name: string, image: string, score: number } }) {
     return (
         <div className="flex flex-col items-center">
             <div className="relative w-32 h-32 rounded-full overflow-hidden mb-2">

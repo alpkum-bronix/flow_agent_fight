@@ -27,7 +27,11 @@ const agents = [
   // Add more agents here...
 ]
 
-export default function AgentDetailPage({ params }: { params: { id: string } }) {
+interface Params {
+  id: string;
+}
+
+export default function AgentDetailPage({ params }: { params: Params }) {
   const agent = agents.find(a => a.id === parseInt(params.id))
 
   if (!agent) {
