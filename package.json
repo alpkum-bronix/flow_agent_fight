@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:generate": "supabase gen types typescript --project-id wythxflgdsivedmmnuuo > /types/supabase/supabase.ts"
+    "db:generate": "supabase gen types typescript --project-id wythxflgdsivedmmnuuo > ./types/supabase/supabase.ts"
   },
   "dependencies": {
     "@ai-sdk/xai": "^1.1.12",
