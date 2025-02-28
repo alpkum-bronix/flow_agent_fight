@@ -93,24 +93,28 @@ export async function processRapBattle() {
         const verse2 = await generateVerse(agents.find(agent => agent.id === recentBattle.agent_2)!, recentBattle.id)
 
         // Update the battle
+        if (!recentBattle.current_round) return
+
         const { data: updatedBattle, error: battleError } = await supabase
             .from('Rap_battle')
             .update({
                 rounds: {
-                    ...recentBattle.rounds,
-                    [recentBattle.current_round]: {
+                    ...(recentBattle.rounds as object || {}),
+                    [recentBattle.current_round.toString()]: {
                         agent1_verse: verse1,
                         agent2_verse: verse2
                     }
                 },
                 current_round: recentBattle.current_round + 1,
-                status: recentBattle.current_round < 3 ? 'IN_PROGRESS' : 'FINISHED'
+                status: recentBattle.current_round < 3 ? 'IN_PROGRESS' : 'COMPLETED'
             })
             .eq('id', recentBattle.id)
             .select()
             .single()
 
         if (battleError) throw battleError
+
+        console.log('Updated battle:', updatedBattle)
 
     } catch (error) {
         console.error('Error processing rap battle:', error)
