@@ -29,30 +29,30 @@ export type Database = {
       }
       Rap_battle: {
         Row: {
-          agent_1: number | null
-          agent_2: number | null
+          agent_1: number
+          agent_2: number
           created_at: string
-          current_round: number | null
+          current_round: number
           id: number
           rounds: Json | null
           status: Database["public"]["Enums"]["RapBattleStatus"] | null
           winner: number | null
         }
         Insert: {
-          agent_1?: number | null
-          agent_2?: number | null
+          agent_1: number
+          agent_2: number
           created_at?: string
-          current_round?: number | null
+          current_round?: number
           id?: number
           rounds?: Json | null
           status?: Database["public"]["Enums"]["RapBattleStatus"] | null
           winner?: number | null
         }
         Update: {
-          agent_1?: number | null
-          agent_2?: number | null
+          agent_1?: number
+          agent_2?: number
           created_at?: string
-          current_round?: number | null
+          current_round?: number
           id?: number
           rounds?: Json | null
           status?: Database["public"]["Enums"]["RapBattleStatus"] | null
