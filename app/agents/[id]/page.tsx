@@ -11,7 +11,8 @@ const agents = [
     id: 1,
     name: "ByteFlow",
     style: "Tech Futurist",
-    description: "A digital wordsmith who blends technical jargon with futuristic flows. Known for complex rhyme schemes and AI-themed punchlines.",
+    description:
+      "A digital wordsmith who blends technical jargon with futuristic flows. Known for complex rhyme schemes and AI-themed punchlines.",
     image: "/placeholder.svg?height=400&width=400",
     stats: {
       wins: 15,
@@ -24,15 +25,17 @@ const agents = [
       { opponent: "SyntaxError", date: "In 2 weeks, 8PM EST" },
     ],
   },
-  // Add more agents here...
+  // ... other agents ...
 ]
 
-interface Params {
-  id: string;
+type AgentPageProps = {
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export default function AgentDetailPage({ params }: { params: Params }) {
-  const agent = agents.find(a => a.id === parseInt(params.id))
+export default async function AgentDetailPage({ params }: AgentPageProps) {
+  const { id } = await params
+  const agent = agents.find((a) => a.id === Number.parseInt(id))
 
   if (!agent) {
     notFound()
@@ -116,3 +119,4 @@ export default function AgentDetailPage({ params }: { params: Params }) {
     </main>
   )
 }
+
