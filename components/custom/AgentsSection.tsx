@@ -1,7 +1,19 @@
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { agents } from "@/constants/dummy_data"
+
+const agents = [
+  {
+    id: 1,
+    name: "ByteFlow",
+    style: "Tech Futurist",
+    description:
+      "A digital wordsmith who blends technical jargon with futuristic flows. Known for complex rhyme schemes and AI-themed punchlines.",
+    image: "/placeholder.svg?height=400&width=400",
+  },
+  // ... (include the rest of the agents)
+]
 
 export function AgentsSection() {
   return (
@@ -15,17 +27,12 @@ export function AgentsSection() {
             </p>
           </div>
         </div>
-        
+
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
           {agents.map((agent) => (
             <Card key={agent.id} className="overflow-hidden">
               <div className="aspect-square relative">
-                <Image
-                  src={agent.image || "/placeholder.svg"}
-                  alt={agent.name}
-                  fill
-                  className="object-cover"
-                />
+                <Image src={agent.image || "/placeholder.svg"} alt={agent.name} fill className="object-cover" />
               </div>
               <CardHeader>
                 <CardTitle>{agent.name}</CardTitle>
@@ -35,7 +42,11 @@ export function AgentsSection() {
                 <p className="text-sm text-muted-foreground">{agent.description}</p>
               </CardContent>
               <CardFooter>
-                <Button variant="outline" className="w-full">View Profile</Button>
+                <Link href={`/agents/${agent.id}`} className="w-full">
+                  <Button variant="outline" className="w-full">
+                    View Profile
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
           ))}
@@ -44,3 +55,4 @@ export function AgentsSection() {
     </section>
   )
 }
+

@@ -1,17 +1,43 @@
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { agents, upcomingBattles } from "@/constants/dummy_data"
 
-function BattleCard({ agent1, agent2, isLive = false, date }: {agent1: any, agent2: any, isLive?: boolean, date?: string}) {
+const agents = [
+  { name: "Agent 1", image: "/agent1.png", style: "Fighting" },
+  { name: "Agent 2", image: "/agent2.png", style: "Support" },
+]
+
+const upcomingBattles = [
+  { agent1: agents[0], agent2: agents[1], date: "2024-03-15" },
+  { agent1: agents[1], agent2: agents[0], date: "2024-03-22" },
+]
+
+interface Agent {
+  name: string;
+  image: string;
+  style: string;
+}
+
+interface BattleCardProps {
+  agent1: Agent;
+  agent2: Agent;
+  isLive?: boolean;
+  date: string;
+  battleId: string;
+}
+
+function BattleCard({ agent1, agent2, isLive = false, date, battleId }: BattleCardProps) {
   return (
-    <Card className={`overflow-hidden ${isLive ? 'border-2 border-primary' : ''}`}>
-      <CardHeader className={isLive ? 'bg-primary/10' : ''}>
+    <Card className={`overflow-hidden ${isLive ? "border-2 border-primary" : ""}`}>
+      <CardHeader className={isLive ? "bg-primary/10" : ""}>
         <div className="flex items-center justify-between">
-          <CardTitle>{isLive ? 'Live Now' : 'Upcoming Battle'}</CardTitle>
+          <CardTitle>{isLive ? "Live Now" : "Upcoming Battle"}</CardTitle>
           {isLive ? (
-            <Badge variant="destructive" className="animate-pulse">LIVE</Badge>
+            <Badge variant="destructive" className="animate-pulse">
+              LIVE
+            </Badge>
           ) : (
             <Badge variant="outline">{date}</Badge>
           )}
@@ -22,12 +48,7 @@ function BattleCard({ agent1, agent2, isLive = false, date }: {agent1: any, agen
           {[agent1, agent2].map((agent, index) => (
             <div key={index} className="flex flex-col items-center text-center">
               <div className="relative h-24 w-24 rounded-full overflow-hidden">
-                <Image
-                  src={agent.image || "/placeholder.svg"}
-                  alt={agent.name}
-                  fill
-                  className="object-cover"
-                />
+                <Image src={agent.image || "/placeholder.svg"} alt={agent.name} fill className="object-cover" />
               </div>
               <h3 className="mt-2 font-bold">{agent.name}</h3>
               <p className="text-sm text-muted-foreground">{agent.style}</p>
@@ -38,9 +59,9 @@ function BattleCard({ agent1, agent2, isLive = false, date }: {agent1: any, agen
           <div className="text-2xl font-bold">VS</div>
         </div>
         <div className="mt-6 text-center">
-          <Button className="w-full sm:w-auto">
-            {isLive ? 'Watch Battle' : 'Set Reminder'}
-          </Button>
+          <Link href={`/battles/${battleId}`}>
+            <Button className="w-full sm:w-auto">{isLive ? "Watch Battle" : "Set Reminder"}</Button>
+          </Link>
         </div>
       </CardContent>
     </Card>
@@ -59,14 +80,21 @@ export function BattlesSection() {
             </p>
           </div>
         </div>
-        
+
         <div className="mt-8 space-y-6">
-          <BattleCard agent1={agents[0]} agent2={agents[1]} isLive={true} />
+          <BattleCard agent1={agents[0]} agent2={agents[1]} isLive={true} date="2024-03-15" battleId="1" />
           {upcomingBattles.map((battle, index) => (
-            <BattleCard key={index} agent1={battle.agent1} agent2={battle.agent2} date={battle.date} />
+            <BattleCard
+              key={index}
+              agent1={battle.agent1}
+              agent2={battle.agent2}
+              date={battle.date}
+              battleId={`upcoming-${index + 1}`}
+            />
           ))}
         </div>
       </div>
     </section>
   )
 }
+
