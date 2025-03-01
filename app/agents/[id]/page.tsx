@@ -1,43 +1,50 @@
-import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { useAccount } from "wagmi"
 
-// This would typically come from a database or API
 const agents = [
   {
     id: 1,
-    name: "ByteFlow",
-    style: "Tech Futurist",
+    name: "Donald Trump",
+    style: "Controversial Orator",
     description:
-      "A digital wordsmith who blends technical jargon with futuristic flows. Known for complex rhyme schemes and AI-themed punchlines.",
-    image: "/placeholder.svg?height=400&width=400",
+      "Former US President known for his unique speaking style and controversial statements. Brings a bombastic approach to rap battles.",
+    video: "/trump_rap.mp4",
     stats: {
-      wins: 15,
-      losses: 3,
-      drawsCount: 2,
+      wins: 45,
+      losses: 30,
+      draws: 5,
     },
-    specialMoves: ["Binary Blast", "Quantum Quip", "Neural Net Knockout"],
+    specialMoves: ["Twitter Tirade", "Wall of Words", "Fake News Flow"],
     upcomingBattles: [
-      { opponent: "Quantum Verse", date: "Next Friday, 9PM EST" },
-      { opponent: "SyntaxError", date: "In 2 weeks, 8PM EST" },
+      { opponent: "Joe Biden", date: "Next Friday, 9PM EST" },
+      { opponent: "Hillary Clinton", date: "In 2 weeks, 8PM EST" },
     ],
   },
-  // ... other agents ...
+  {
+    id: 2,
+    name: "Volodymyr Zelensky",
+    style: "Charismatic Leader",
+    description:
+      "President of Ukraine and former comedian. Combines political acumen with entertainment skills in his rap performances.",
+    video: "/zelensky_rap.mp4",
+    stats: {
+      wins: 40,
+      losses: 35,
+      draws: 5,
+    },
+    specialMoves: ["Diplomatic Diss", "Comedy Comeback", "Resilience Rhyme"],
+    upcomingBattles: [
+      { opponent: "Vladimir Putin", date: "Next Saturday, 9PM EST" },
+      { opponent: "Emmanuel Macron", date: "In 3 weeks, 8PM EST" },
+    ],
+  },
 ]
 
-type AgentPageProps = {
-  params: Promise<{ id: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-
-export default async function AgentDetailPage({ params }: AgentPageProps) {
-  const { address, isConnected } = useAccount();
-  const { id } = await params
-  const agent = agents.find((a) => a.id === Number.parseInt(id))
+export default async function AgentDetailPage({ params }: { params: { id: string } }) {
+  const agent = agents.find((a) => a.id === Number(params.id))
 
   if (!agent) {
     notFound()
@@ -54,12 +61,14 @@ export default async function AgentDetailPage({ params }: AgentPageProps) {
             <CardTitle>{agent.name}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="aspect-square relative mb-4">
-              <Image
-                src={agent.image || "/placeholder.svg"}
-                alt={agent.name}
-                fill
-                className="object-cover rounded-lg"
+            <div className="aspect-video relative mb-4">
+              <video
+                src={agent.video}
+                className="w-full h-full object-cover rounded-lg"
+                autoPlay
+                loop
+                muted
+                playsInline
               />
             </div>
             <Badge>{agent.style}</Badge>
@@ -82,7 +91,7 @@ export default async function AgentDetailPage({ params }: AgentPageProps) {
                   <p className="text-sm text-muted-foreground">Losses</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">{agent.stats.drawsCount}</p>
+                  <p className="text-2xl font-bold">{agent.stats.draws}</p>
                   <p className="text-sm text-muted-foreground">Draws</p>
                 </div>
               </div>
@@ -100,24 +109,9 @@ export default async function AgentDetailPage({ params }: AgentPageProps) {
               </ul>
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Upcoming Battles</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                {agent.upcomingBattles.map((battle, index) => (
-                  <li key={index} className="flex justify-between items-center">
-                    <span>vs. {battle.opponent}</span>
-                    <Badge variant="outline">{battle.date}</Badge>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-          <Button className="w-full">Challenge {agent.name}</Button>
         </div>
       </div>
     </main>
   )
 }
+

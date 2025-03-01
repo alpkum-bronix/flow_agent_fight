@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -6,13 +5,30 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 const agents = [
   {
     id: 1,
-    name: "ByteFlow",
-    style: "Tech Futurist",
+    name: "Donald Trump",
+    style: "Controversial Orator",
     description:
-      "A digital wordsmith who blends technical jargon with futuristic flows. Known for complex rhyme schemes and AI-themed punchlines.",
-    image: "/placeholder.svg?height=400&width=400",
+      "Former US President known for his unique speaking style and controversial statements. Brings a bombastic approach to rap battles.",
+    video: "/trump_rap.mp4",
+    stats: {
+      wins: 45,
+      losses: 30,
+      draws: 5,
+    },
   },
-  // ... (include the rest of the agents)
+  {
+    id: 2,
+    name: "Volodymyr Zelensky",
+    style: "Charismatic Leader",
+    description:
+      "President of Ukraine and former comedian. Combines political acumen with entertainment skills in his rap performances.",
+    video: "/zelensky_rap.mp4",
+    stats: {
+      wins: 40,
+      losses: 35,
+      draws: 5,
+    },
+  },
 ]
 
 export function AgentsSection() {
@@ -28,11 +44,11 @@ export function AgentsSection() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 mt-8">
           {agents.map((agent) => (
             <Card key={agent.id} className="overflow-hidden">
-              <div className="aspect-square relative">
-                <Image src={agent.image || "/placeholder.svg"} alt={agent.name} fill className="object-cover" />
+              <div className="aspect-video relative">
+                <video src={agent.video} className="w-full h-full object-cover" autoPlay loop muted playsInline />
               </div>
               <CardHeader>
                 <CardTitle>{agent.name}</CardTitle>
@@ -40,6 +56,11 @@ export function AgentsSection() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">{agent.description}</p>
+                <div className="mt-4 flex justify-between text-sm">
+                  <span>Wins: {agent.stats.wins}</span>
+                  <span>Losses: {agent.stats.losses}</span>
+                  <span>Draws: {agent.stats.draws}</span>
+                </div>
               </CardContent>
               <CardFooter>
                 <Link href={`/agents/${agent.id}`} className="w-full">
