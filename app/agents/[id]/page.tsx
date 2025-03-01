@@ -11,7 +11,7 @@ const agents = [
     style: "Controversial Orator",
     description:
       "Former US President known for his unique speaking style and controversial statements. Brings a bombastic approach to rap battles.",
-    video: "/trump_rap.mp4",
+    video: "/trump.mp4",
     stats: {
       wins: 45,
       losses: 30,
@@ -29,7 +29,7 @@ const agents = [
     style: "Charismatic Leader",
     description:
       "President of Ukraine and former comedian. Combines political acumen with entertainment skills in his rap performances.",
-    video: "/zelensky_rap.mp4",
+    video: "/trump.mp4",
     stats: {
       wins: 40,
       losses: 35,
@@ -109,6 +109,22 @@ export default async function AgentDetailPage({ params }: { params: { id: string
               </ul>
             </CardContent>
           </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Upcoming Battles</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2">
+                {agent.upcomingBattles.map((battle, index) => (
+                  <li key={index} className="flex justify-between items-center">
+                    <span>vs. {battle.opponent}</span>
+                    <Badge variant="outline">{battle.date}</Badge>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+          <Button className="w-full">Challenge {agent.name}</Button>
         </div>
       </div>
     </main>

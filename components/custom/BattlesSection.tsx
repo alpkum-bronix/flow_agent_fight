@@ -1,31 +1,30 @@
-import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
 const agents = [
-  { name: "Agent 1", image: "/agent1.png", style: "Fighting" },
-  { name: "Agent 2", image: "/agent2.png", style: "Support" },
+  { name: "Donald Trump", video: "/trump.mp4", style: "Controversial Orator" },
+  { name: "Volodymyr Zelensky", video: "/trump.mp4", style: "Charismatic Leader" },
 ]
 
 const upcomingBattles = [
   { agent1: agents[0], agent2: agents[1], date: "2024-03-15" },
-  { agent1: agents[1], agent2: agents[0], date: "2024-03-22" },
+  // { agent1: agents[1], agent2: agents[0], date: "2024-03-22" },
 ]
 
 interface Agent {
-  name: string;
-  image: string;
-  style: string;
+  name: string
+  video: string
+  style: string
 }
 
 interface BattleCardProps {
-  agent1: Agent;
-  agent2: Agent;
-  isLive?: boolean;
-  date: string;
-  battleId: string;
+  agent1: Agent
+  agent2: Agent
+  isLive?: boolean
+  date: string
+  battleId: string
 }
 
 function BattleCard({ agent1, agent2, isLive = false, date, battleId }: BattleCardProps) {
@@ -48,7 +47,14 @@ function BattleCard({ agent1, agent2, isLive = false, date, battleId }: BattleCa
           {[agent1, agent2].map((agent, index) => (
             <div key={index} className="flex flex-col items-center text-center">
               <div className="relative h-24 w-24 rounded-full overflow-hidden">
-                <Image src={agent.image || "/placeholder.svg"} alt={agent.name} fill className="object-cover" />
+                <video
+                  src={agent.video || "/placeholder.mp4"}
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                />
               </div>
               <h3 className="mt-2 font-bold">{agent.name}</h3>
               <p className="text-sm text-muted-foreground">{agent.style}</p>

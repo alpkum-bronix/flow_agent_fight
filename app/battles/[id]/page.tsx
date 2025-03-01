@@ -15,14 +15,14 @@ const mockBattleData = {
   agent1: {
     id: 1,
     name: "Donald Trump",
-    video: "/trump_rap.mp4",
+    video: "/trump.mp4",
     score: 0,
     choice: null,
   },
   agent2: {
     id: 2,
     name: "Volodymyr Zelensky",
-    video: "/zelensky_rap.mp4",
+    video: "/trump.mp4",
     score: 0,
     choice: null,
   },
@@ -46,35 +46,31 @@ export default function LiveBattlePage() {
   const [isAtBottom, setIsAtBottom] = useState(true)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setBattleData((prevData: any) => {
-        const newData = {
-          ...prevData,
-          status: prevData.status === "waiting" ? "in_progress" : prevData.status,
-          currentRound: Math.min(prevData.currentRound + 1, prevData.rounds.length - 1),
-          agent1: {
-            ...prevData.agent1,
-            choice: getRandomChoice(),
-          },
-          agent2: {
-            ...prevData.agent2,
-            choice: getRandomChoice(),
-          },
-        }
+    setBattleData((prevData: any) => {
+      const newData = {
+        ...prevData,
+        status: prevData.status === "waiting" ? "in_progress" : prevData.status,
+        currentRound: Math.min(prevData.currentRound + 1, prevData.rounds.length - 1),
+        agent1: {
+          ...prevData.agent1,
+          choice: getRandomChoice(),
+        },
+        agent2: {
+          ...prevData.agent2,
+          choice: getRandomChoice(),
+        },
+      }
 
-        const winner = determineWinner(newData.agent1.choice, newData.agent2.choice)
-        if (winner) {
-          newData.rounds[newData.currentRound].winner = winner
-          newData[winner].score += 1
-        }
+      const winner = determineWinner(newData.agent1.choice, newData.agent2.choice)
+      if (winner) {
+        newData.rounds[newData.currentRound].winner = winner
+        newData[winner].score += 1
+      }
 
-        return newData
-      })
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 60))
-      addChatMessage()
-    }, 1000)
-
-    return () => clearInterval(interval)
+      return newData
+    })
+    setTimeLeft((prev) => (prev > 0 ? prev - 1 : 60))
+    addChatMessage();
   }, [])
 
   useEffect(() => {
@@ -162,6 +158,21 @@ export default function LiveBattlePage() {
                   </p>
                 ))}
               </div>
+              <div className="p-4 border-t bg-card">
+                <input
+                  type="text"
+                  placeholder="Type your message..."
+                  className="w-full p-2 rounded-md bg-input text-foreground"
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      const newMessage = `You: ${e.currentTarget.value}`
+                      setChat((prev) => [...prev, newMessage])
+                      e.currentTarget.value = ""
+                      setIsAtBottom(true)
+                    }
+                  }}
+                />
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -182,7 +193,7 @@ export default function LiveBattlePage() {
   )
 }
 
-function BattleStage({ agent1, agent2 }: any) {
+function BattleStage({ agent1, agent2 }: { agent1: any; agent2: any }) {
   return (
     <Card className="mb-6">
       <CardContent className="p-6">
@@ -196,7 +207,7 @@ function BattleStage({ agent1, agent2 }: any) {
   )
 }
 
-function AgentDisplay({ agent }: any) {
+function AgentDisplay({ agent }: { agent: any }) {
   return (
     <div className="flex flex-col items-center">
       <div className="relative w-32 h-32 rounded-full overflow-hidden mb-2 border-4 border-primary">

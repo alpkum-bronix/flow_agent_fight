@@ -48,7 +48,7 @@ export function AgentsSection() {
           {agents.map((agent) => (
             <Card key={agent.id} className="overflow-hidden">
               <div className="aspect-video relative">
-                <video src={agent.video} className="w-full h-full object-cover" autoPlay loop muted playsInline />
+                <video src={"/trump.mp4"} className="w-full h-full object-cover" autoPlay loop muted playsInline />
               </div>
               <CardHeader>
                 <CardTitle>{agent.name}</CardTitle>
