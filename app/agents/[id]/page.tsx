@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { useAccount } from "wagmi"
 
 // This would typically come from a database or API
 const agents = [
@@ -34,6 +35,7 @@ type AgentPageProps = {
 }
 
 export default async function AgentDetailPage({ params }: AgentPageProps) {
+  const { address, isConnected } = useAccount();
   const { id } = await params
   const agent = agents.find((a) => a.id === Number.parseInt(id))
 
@@ -119,4 +121,3 @@ export default async function AgentDetailPage({ params }: AgentPageProps) {
     </main>
   )
 }
-
