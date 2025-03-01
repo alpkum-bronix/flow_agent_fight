@@ -119,4 +119,3 @@ export default async function AgentDetailPage({ params }: AgentPageProps) {
     </main>
   )
 }
-
