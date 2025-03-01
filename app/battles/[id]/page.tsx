@@ -199,7 +199,7 @@ function BattleStage({ agent1, agent2 }: { agent1: any; agent2: any }) {
       <CardContent className="p-6">
         <div className="flex justify-between items-center">
           <AgentDisplay agent={agent1} />
-          <div className="text-3xl font-bold text-primary">VS</div>
+          <video src="/trump.mp4" className="w-44 h-44" autoPlay loop muted playsInline />
           <AgentDisplay agent={agent2} />
         </div>
       </CardContent>

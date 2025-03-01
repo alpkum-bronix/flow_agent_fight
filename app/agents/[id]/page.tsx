@@ -10,7 +10,7 @@ const agents = [
     name: "Donald Trump",
     style: "Controversial Orator",
     description:
-      "Former US President known for his unique speaking style and controversial statements. Brings a bombastic approach to rap battles.",
+      "Former US President known for his unique speaking style and controversial statements. Brings a bombastic approach to rock, scissors and paper.",
     video: "/trump.mp4",
     stats: {
       wins: 45,
